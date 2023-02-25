@@ -1,9 +1,7 @@
 package com.salah.kafkabasics;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.kafka.clients.producer.KafkaProducer;
-import org.apache.kafka.clients.producer.ProducerConfig;
-import org.apache.kafka.clients.producer.ProducerRecord;
+import org.apache.kafka.clients.producer.*;
 import org.apache.kafka.common.serialization.StringSerializer;
 
 import java.util.Properties;
@@ -23,11 +21,21 @@ public class ProducerDemo {
         // Create the Producer
         KafkaProducer<String, String> producer = new KafkaProducer<>(properties);
 
-        // Create a producer record
-        ProducerRecord<String, String> producerRecord = new ProducerRecord<>("topic_1", "hello world");
 
-        // send the data - async
-        producer.send(producerRecord);
+        for (int i = 0; i < 100; i++) {
+            // Create a producer record
+            ProducerRecord<String, String> producerRecord = new ProducerRecord<>("topic_1", "hello world " + i);
+
+
+            // send the data - async
+            producer.send(producerRecord, (metadata, exception) -> {
+                if (exception == null) {
+                    log.info("message received successfully Topic {}, Partition {}, Offset {}, Timestamp {}",
+                            metadata.topic(), metadata.partition(), metadata.offset(), metadata.timestamp());
+
+                }
+            });
+        }
 
         // block the code until the data is sent
         producer.close();
