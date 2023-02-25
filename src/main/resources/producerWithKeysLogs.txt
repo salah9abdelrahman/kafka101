@@ -1,0 +1,21 @@
+message received successfully  with Key key_0 to  Partition 2
+message received successfully  with Key key_1 to  Partition 1
+message received successfully  with Key key_2 to  Partition 0
+message received successfully  with Key key_3 to  Partition 1
+message received successfully  with Key key_4 to  Partition 0
+message received successfully  with Key key_5 to  Partition 0
+message received successfully  with Key key_6 to  Partition 2
+message received successfully  with Key key_7 to  Partition 2
+message received successfully  with Key key_8 to  Partition 2
+message received successfully  with Key key_9 to  Partition 2
+
+message received successfully  with Key key_0 to  Partition 2
+message received successfully  with Key key_1 to  Partition 1
+message received successfully  with Key key_2 to  Partition 0
+message received successfully  with Key key_3 to  Partition 1
+message received successfully  with Key key_4 to  Partition 0
+message received successfully  with Key key_5 to  Partition 0
+message received successfully  with Key key_6 to  Partition 2
+message received successfully  with Key key_7 to  Partition 2
+message received successfully  with Key key_8 to  Partition 2
+message received successfully  with Key key_9 to  Partition 2

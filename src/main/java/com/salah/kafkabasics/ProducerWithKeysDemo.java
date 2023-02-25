@@ -1,14 +1,16 @@
 package com.salah.kafkabasics;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.kafka.clients.producer.*;
+import org.apache.kafka.clients.producer.KafkaProducer;
+import org.apache.kafka.clients.producer.ProducerConfig;
+import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.serialization.StringSerializer;
 
 import java.util.Properties;
 
 @Slf4j
 
-public class ProducerDemo {
+public class ProducerWithKeysDemo {
     public static void main(String[] args) {
 
         // Producer configs
@@ -21,24 +23,34 @@ public class ProducerDemo {
         KafkaProducer<String, String> producer = new KafkaProducer<>(properties);
 
 
-        for (int i = 0; i < 100; i++) {
-            // Create a producer record
-            ProducerRecord<String, String> producerRecord = new ProducerRecord<>("topic_1", "hello world " + i);
+        produceMessages(producer);
 
-            // send the data - async
-            producer.send(producerRecord, (metadata, exception) -> {
-                if (exception == null) {
-                    log.info("message received successfully Topic {}, Partition {}, Offset {}, Timestamp {}",
-                            metadata.topic(), metadata.partition(), metadata.offset(), metadata.timestamp());
-
-                }
-            });
-                // The simplest way to send a message synchronously
-            //    .get();
-        }
+        produceMessages(producer);
 
         // block the code until the data is sent
         producer.close();
 
+    }
+
+    private static void produceMessages(KafkaProducer<String, String> producer) {
+        for (int i = 0; i < 10; i++) {
+            // Create a producer record
+            ProducerRecord<String, String> producerRecord = new ProducerRecord<>("topic_1",
+                    "key_" + i, "hello world " + i);
+
+            // send the data - async
+            producer.send(producerRecord, (metadata, exception) -> {
+                if (exception == null) {
+                    log.info("message received successfully  with Key {} to  Partition {}", producerRecord.key(), metadata.partition());
+
+                }
+            });
+            try {
+
+                Thread.sleep(1000);
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        }
     }
 }
