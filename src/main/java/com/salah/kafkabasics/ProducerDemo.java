@@ -26,7 +26,6 @@ public class ProducerDemo {
             // Create a producer record
             ProducerRecord<String, String> producerRecord = new ProducerRecord<>("topic_1", "hello world " + i);
 
-
             // send the data - async
             producer.send(producerRecord, (metadata, exception) -> {
                 if (exception == null) {
@@ -35,6 +34,8 @@ public class ProducerDemo {
 
                 }
             });
+                // The simplest way to send a message synchronously
+            //    .get();
         }
 
         // block the code until the data is sent
